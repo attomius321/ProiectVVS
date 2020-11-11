@@ -1,4 +1,4 @@
-
+This project was used for my job interview. I changed some things and evolved the app to this stage for my VVS project.
 
 Authentication is mocked, simply press Sign in and it will redirect you to appointments page with all credentials.
 
