@@ -1,0 +1,55 @@
+<div class="my-container mat-elevation-z8" style="background-color: white;">
+  <mat-form-field>
+    <mat-label>Cautati ...</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Pisica" #input autocomplete="off">
+  </mat-form-field>
+  <table mat-table style="" [dataSource]="dataSource" matSort matSortActive="created" id="content-table">
+    <ng-container matColumnDef="animal">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nume Animal</th>
+      <td mat-cell *matCellDef="let appointment">{{appointment.animal}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="doc" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nume Doctor</th>
+      <td mat-cell *matCellDef="let appointment">{{appointment.doc}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="status" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let appointment"
+          [ngClass]="{'created': isCreated(appointment.status),
+                      'confirmed': isConfirmed(appointment.status),
+                      'ended': hasEnded(appointment.status)}"> {{appointment.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unix" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data si ora</th>
+      <td mat-cell *matCellDef="let appointment"> {{appointment.unix | date: 'yyyy-MM-dd | HH:mm'}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="diagnostic" >
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Diagnostic</th>
+      <td mat-cell *matCellDef="let appointment"> {{appointment.diagnostic}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Edit" >
+      <th mat-header-cell *matHeaderCellDef>Edit</th>
+      <td mat-cell *matCellDef="let appointment">
+        <button class="btn" (click)="goToAppointment(appointment)">Edit</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Delete" >
+      <th mat-header-cell *matHeaderCellDef>Delete</th>
+      <td mat-cell *matCellDef="let appointment">
+        <div *ngIf="appointment.status == 'DONE'">
+          <button class="btn" style="background-color: darkred" (click)="deleteAppointment(appointment)">Delete</button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
